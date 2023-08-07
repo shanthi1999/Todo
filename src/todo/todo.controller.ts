@@ -22,7 +22,7 @@ import {
 } from '@nestjs/swagger';
 import { Todo } from 'src/common/entities/todo.entity';
 import { TodoListResponse } from './interface/index';
-import { TodoResponseDto, TodoDto } from './dtos/getTodo.dto'; // Adjust the path as needed
+import { TodoResponseDto, TodoDto } from './dtos/getTodo.dto';
 import { TodoErrorResponseDto } from './dtos/errorResponse.dto';
 
 @Controller('todos')

@@ -1,12 +1,19 @@
+import {
+  DATABASE_HOST,
+  DATABASE_NAME,
+  DATABASE_PASSWORD,
+  DATABASE_PORT,
+  DATABASE_USERNAME,
+} from 'src/common/constants/database.constants';
 import { DataSource } from 'typeorm';
 
 const AppDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'root',
-  database: 'todo',
+  host: DATABASE_HOST,
+  port: DATABASE_PORT,
+  username: DATABASE_USERNAME,
+  password: DATABASE_PASSWORD,
+  database: DATABASE_NAME,
   synchronize: false,
   logging: true,
   entities: ['src/common/entities/**/*.ts'],

@@ -1,11 +1,11 @@
 import {
   DATABASE_HOST,
   DATABASE_PORT,
-  // DATABASE_USERNAME,
-  // DATABASE_PASSWORD,
-  // DATABASE_NAME,
   DATABASE_SYNCHRONIZE,
-  DATABASE_LOGGING,
+  // DATABASE_LOGGING,
+  DATABASE_PASSWORD,
+  DATABASE_NAME,
+  DATABASE_USERNAME,
 } from '../../common/constants/database.constants';
 
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
@@ -19,12 +19,12 @@ export class PostgresService implements TypeOrmOptionsFactory {
       type: 'postgres',
       host: DATABASE_HOST,
       port: DATABASE_PORT,
-      username: 'postgres',
-      password: 'root',
-      database: 'todo',
+      username: DATABASE_USERNAME,
+      password: DATABASE_PASSWORD,
+      database: DATABASE_NAME,
       entities: [__dirname + '/../../common/entities/*.entity{.ts,.js}'],
       synchronize: DATABASE_SYNCHRONIZE,
-      logging: DATABASE_LOGGING,
+      // logging: DATABASE_LOGGING,
       migrations: ['dist/database/migrations/*{.ts,.js}'],
       migrationsRun: true,
       namingStrategy: new SnakeNamingStrategy(),

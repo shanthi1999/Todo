@@ -28,7 +28,6 @@ export class TodoService {
       });
     }
 
-    // Apply search query if provided
     if (searchQuery) {
       query.andWhere(`todo.title ILIKE :searchQuery`, {
         searchQuery: `%${searchQuery}%`,
@@ -41,7 +40,6 @@ export class TodoService {
 
     const total = await query.getCount();
 
-    // Apply pagination
     const todos = await query
       .skip((page - 1) * pageSize)
       .take(pageSize)
