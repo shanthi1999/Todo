@@ -9,13 +9,24 @@ import {
   Query,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { ResponseService } from 'src/common/responseHandler/response.service';
+import { ResponseService } from '../common/responseHandler/response.service';
 import { Response } from 'express';
 import { CreateTodoDto } from './dtos/createTodo.dto';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiQuery,
+  ApiOperation,
+  ApiBadRequestResponse,
+  ApiBody,
+} from '@nestjs/swagger';
+import { Todo } from 'src/common/entities/todo.entity';
+import { TodoListResponse } from './interface/index';
+import { TodoResponseDto, TodoDto } from './dtos/getTodo.dto'; // Adjust the path as needed
+import { TodoErrorResponseDto } from './dtos/errorResponse.dto';
 
 @Controller('todos')
-@ApiTags('todos')
+@ApiTags('TODO APIS')
 export class TodoController {
   constructor(
     private todoService: TodoService,
@@ -23,10 +34,54 @@ export class TodoController {
   ) {}
 
   @Get()
+  @ApiOperation({ summary: "Get a list of all todo's with pagination" })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Current page number',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    required: false,
+    type: Number,
+    description: "Todo's per page",
+  })
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    type: String,
+    description: 'Search todo by title',
+  })
+  @ApiQuery({
+    name: 'sortField',
+    required: false,
+    type: String,
+    description:
+      'Sort the todo list by field name for eg: created_at or updated_at',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    type: String,
+    description: 'Sort the todo list by ASC or DESC',
+  })
+  @ApiQuery({
+    name: 'filterStatus',
+    required: false,
+    type: Boolean,
+    description: 'filter the todo list by completed status',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Todo List retrieved successfully',
+    description: 'List of todos retrieved successfully',
+    type: TodoResponseDto,
     isArray: true,
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: "If the API get's failed",
+    type: TodoErrorResponseDto,
   })
   async getTodoList(
     @Res() res: Response,
@@ -63,6 +118,18 @@ export class TodoController {
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create a new todo' })
+  @ApiBody({ type: CreateTodoDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Todo inserted successfully',
+    type: TodoDto,
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: "If the API get's failed",
+    type: TodoErrorResponseDto,
+  })
   async createTodo(
     @Body() todoData: CreateTodoDto,
     @Res() res: Response,
@@ -86,6 +153,24 @@ export class TodoController {
   }
 
   @Put()
+  @ApiOperation({ summary: 'Update todo' })
+  @ApiQuery({
+    name: 'id',
+    required: true,
+    type: Number,
+    description: 'Todo is updated by using the ID',
+  })
+  @ApiBody({ type: CreateTodoDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Todo updated successfully',
+    type: Todo,
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: "If the API get's failed",
+    type: TodoErrorResponseDto,
+  })
   async updateTodo(
     @Body() todoData: Partial<CreateTodoDto>,
     @Res() res: Response,
@@ -119,6 +204,23 @@ export class TodoController {
   }
 
   @Delete()
+  @ApiOperation({ summary: 'Delete todo' })
+  @ApiQuery({
+    name: 'id',
+    required: true,
+    type: Number,
+    description: 'Todo is deleted by using the ID',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Todo deleted successfully',
+    type: {} as any,
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: "If the API get's failed",
+    type: TodoErrorResponseDto,
+  })
   async deleteTodo(@Res() res: Response, @Query('id') id: number) {
     try {
       if (id) {

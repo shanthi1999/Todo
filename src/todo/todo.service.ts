@@ -3,13 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from '../common/entities/todo.entity';
 import { CreateTodoDto } from './dtos/createTodo.dto';
-
-interface TodoListResponse {
-  data: Todo[];
-  totalRecords: number;
-  currentPage: number;
-  pageSize: number;
-}
+import { TodoListResponse } from './interface';
 
 @Injectable({})
 export class TodoService {
