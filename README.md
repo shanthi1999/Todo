@@ -1,4 +1,4 @@
-# Project Name
+# TODO Application Backend
 
 ## Local Setup Instructions
 
@@ -19,6 +19,8 @@ If you are running the code locally, please follow these steps:
 
 4. Open PGAdmin locally and create a database named `todo`. You can also create a table named `todo` with the respective columns using the SQL script provided below:
 
+Open the database named `todo` and go to script and run the following command:
+
 ```sql
 CREATE TABLE todo (
     id SERIAL PRIMARY KEY,
@@ -31,6 +33,7 @@ CREATE TABLE todo (
 
 
 4. Ensure that your environment configuration (env) has the correct database configuration.
+create file named .env
 
 DATABASE_HOST='localhost'
 DATABASE_PORT=5432
@@ -40,16 +43,6 @@ DATABASE_NAME='todo'
 DATABASE_SYNCHRONIZE=true
 DATABASE_LOGGING=true
 
-
-for example:
-
-DATABASE_HOST='localhost'
-DATABASE_PORT=5432
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=root
-DATABASE_NAME='todo'
-DATABASE_SYNCHRONIZE=true
-DATABASE_LOGGING=true
 
 5. Run the project using the following command:
 
