@@ -1,73 +1,124 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Project Name
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Local Setup Instructions
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+If you are running the code locally, please follow these steps:
 
-## Description
+1. Clone the repository.
+2. Install NestJS globally by running the following command:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+   ```sh
+   npm i -g @nestjs/cli
 
-## Installation
+   ```
 
-```bash
-$ npm install
+3. Navigate to the repository and install project dependencies:
+
+   npm install
+
+
+4. Open PGAdmin locally and create a database named `todo`. You can also create a table named `todo` with the respective columns using the SQL script provided below:
+
+```sql
+CREATE TABLE todo (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+4. Ensure that your environment configuration (env) has the correct database configuration.
+
+DATABASE_HOST='localhost'
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=root
+DATABASE_NAME='todo'
+DATABASE_SYNCHRONIZE=true
+DATABASE_LOGGING=true
+
+
+for example:
+
+DATABASE_HOST='localhost'
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=root
+DATABASE_NAME='todo'
+DATABASE_SYNCHRONIZE=true
+DATABASE_LOGGING=true
+
+5. Run the project using the following command:
+
+   npm run start:dev
+
+6. The project is now running at http://localhost:3000.
+
+## API Information
+
+### GET Endpoint: Retrieve Paginated Todos
+
+Retrieve paginated todos from the server.
+
+**Endpoint:** [http://localhost:3000/todos?page=1&pageSize=10](http://localhost:3000/todos?page=1&pageSize=10)
+
+### GET Endpoint: Retrieve Todos with Specific Status
+
+Retrieve todos with a specific status from the server.
+
+**Endpoint:** [http://localhost:3000/todos?filterStatus=true](http://localhost:3000/todos?filterStatus=true)
+
+### GET Endpoint: Retrieve Todos with Sorting
+
+Retrieve todos with sorting based on a specific field.
+
+**Endpoint:** [http://localhost:3000/todos?sortField=created_at&sortOrder=DESC](http://localhost:3000/todos?sortField=created_at&sortOrder=DESC)
+
+### GET Endpoint: Search for Todos
+
+Search for todos based on a search query.
+
+**Endpoint:** [http://localhost:3000/todos?search=sample](http://localhost:3000/todos?search=sample)
+
+### POST Endpoint: Create a New Todo
+
+Create a new todo by sending a POST request.
+
+**Endpoint:** [http://localhost:3000/todos](http://localhost:3000/todos)
+
+**Payload:**
+```json
+{
+    "title": "Review Content",
+    "description": "Proofread and refine all text and visual content on the Home Page for accuracy and clarity",
+    "completed": false
+}
 ```
+## API Information
 
-## Running the app
+### PUT Endpoint: Update a Todo
 
-```bash
-# development
-$ npm run start
+Update an existing todo by sending a PUT request.
 
-# watch mode
-$ npm run start:dev
+**Endpoint:** [http://localhost:3000/todos?id=22](http://localhost:3000/todos?id=22)
 
-# production mode
-$ npm run start:prod
-```
+**Payload:**
+```json
+{
+    "title": "Review Content",
+    "description": "Proofread and refine all text and visual content on the Home Page for accuracy and clarity",
+    "completed": false
+}
 
-## Test
+## API Information
 
-```bash
-# unit tests
-$ npm run test
+### DELETE Endpoint: Delete a Todo
 
-# e2e tests
-$ npm run test:e2e
+Delete a todo by sending a DELETE request.
 
-# test coverage
-$ npm run test:cov
-```
+**Endpoint:** [http://localhost:3000/todos?id=22](http://localhost:3000/todos?id=22)
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
