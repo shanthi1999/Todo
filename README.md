@@ -50,6 +50,8 @@ DATABASE_LOGGING=true
 
 6. The project is now running at http://localhost:3000.
 
+
+```
 ## API Information
 
 ### GET Endpoint: Retrieve Paginated Todos
@@ -76,6 +78,7 @@ Search for todos based on a search query.
 
 **Endpoint:** [http://localhost:3000/todos?search=sample](http://localhost:3000/todos?search=sample)
 
+
 ### POST Endpoint: Create a New Todo
 
 Create a new todo by sending a POST request.
@@ -90,8 +93,6 @@ Create a new todo by sending a POST request.
     "completed": false
 }
 ```
-## API Information
-
 ### PUT Endpoint: Update a Todo
 
 Update an existing todo by sending a PUT request.
@@ -106,8 +107,7 @@ Update an existing todo by sending a PUT request.
     "completed": false
 }
 
-## API Information
-
+```
 ### DELETE Endpoint: Delete a Todo
 
 Delete a todo by sending a DELETE request.
